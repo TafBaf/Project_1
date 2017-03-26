@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="InfoProviderService" targetNamespace="http://controller/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://controller/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema">
+  <import namespace="http://controller/" schemaLocation="infoprovider_schema1.xsd"/>
+</schema>
+  </wsdl:types>
+  <wsdl:message name="GetInfo">
+    <wsdl:part name="parameters" element="tns:GetInfo">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetInfoResponse">
+    <wsdl:part name="parameters" element="tns:GetInfoResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="InfoProvider">
+    <wsdl:operation name="GetInfo">
+      <wsdl:input name="GetInfo" message="tns:GetInfo">
+    </wsdl:input>
+      <wsdl:output name="GetInfoResponse" message="tns:GetInfoResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="InfoProviderServiceSoapBinding" type="tns:InfoProvider">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetInfo">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="GetInfo">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetInfoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="InfoProviderService">
+    <wsdl:port name="InfoProviderPort" binding="tns:InfoProviderServiceSoapBinding">
+      <soap:address location="http://localhost:8080/project_1/services/InfoProviderPort"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
