@@ -10,7 +10,7 @@ import java.util.Properties;
 
 public class LibPostgreSQL {
 
-	private Properties GetProperties() {
+	private static Properties GetProperties() {
 		Properties properties = new Properties();
 		properties.setProperty("url", "jdbc:postgresql://localhost:5432/library");
 		properties.setProperty("user", "postgres");
@@ -20,7 +20,7 @@ public class LibPostgreSQL {
 	}
 
 	
-	private Connection GetConnection(){
+	private static Connection GetConnection(){
 		Properties properties = GetProperties();
 		Connection connection = null;
 		
@@ -75,7 +75,7 @@ public class LibPostgreSQL {
 	}
 	
 	
-	public void Disconnect(ResultSet resultSet, PreparedStatement prepStatement, Connection connection) {
+	public static void Disconnect(ResultSet resultSet, PreparedStatement prepStatement, Connection connection) {
         try {
             if (resultSet != null) {
             	resultSet.close();
