@@ -13,4 +13,12 @@
 			<bean class="org.apache.cxf.feature.LoggingFeature" />
 		</jaxws:features>
 	</jaxws:endpoint>
+	<jaxws:endpoint xmlns:tns="http://controller/" id="ws_library"
+		implementor="controller.WS_Library" wsdlLocation="wsdl/ws_library.wsdl"
+		endpointName="tns:WS_LibraryPort" serviceName="tns:WS_LibraryService"
+		address="/WS_LibraryPort">
+		<jaxws:features>
+			<bean class="org.apache.cxf.feature.LoggingFeature" />
+		</jaxws:features>
+	</jaxws:endpoint>
 </beans>

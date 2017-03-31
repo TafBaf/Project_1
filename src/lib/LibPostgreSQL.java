@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 
@@ -12,6 +14,7 @@ public class LibPostgreSQL {
 
 	private static Properties GetProperties() {
 		Properties properties = new Properties();
+		
 		properties.setProperty("url", "jdbc:postgresql://localhost:5432/library");
 		properties.setProperty("user", "postgres");
 		properties.setProperty("password", "passw");
@@ -23,10 +26,11 @@ public class LibPostgreSQL {
 	private static Connection GetConnection(){
 		Properties properties = GetProperties();
 		Connection connection = null;
-		
+
 		try {
+			Class.forName("org.postgresql.Driver");
 			connection = DriverManager.getConnection(properties.getProperty("url"), properties);
-		} catch (SQLException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		
@@ -34,11 +38,12 @@ public class LibPostgreSQL {
 	}
 	
 	
-	public static ResultSet GetQueryResultSet(String query, String[] prepParams) {
+	public static List<String[]> GetQueryRows(String query, String[] prepParams) {
 		Connection connection = GetConnection();
 		PreparedStatement prepStatement = null;
 		ResultSet resultSet = null;
-
+		List<String[]> table = null;
+		
 		try {
 			prepStatement = connection.prepareStatement(query);
 			if (prepParams != null) {
@@ -47,12 +52,24 @@ public class LibPostgreSQL {
  				}
 			}
 			resultSet = prepStatement.executeQuery();
+
+			int colCount = resultSet.getMetaData().getColumnCount();
+			table = new ArrayList<>();
+			while(resultSet.next()) {
+			    String[] row = new String[colCount];
+			    for(int col = 1; col <= colCount; col++){
+		            Object obj = resultSet.getObject(col);
+		            row[col-1] = (obj == null) ? null : obj.toString();
+			    }
+			    table.add(row);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			Disconnect(resultSet, prepStatement, connection);
 		}
-		Disconnect(null, prepStatement, connection);
-		
-		return resultSet;
+
+		return table;
 	}
 
 	
@@ -70,8 +87,9 @@ public class LibPostgreSQL {
 			prepStatement.executeUpdate(); 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-		Disconnect(null, prepStatement, connection);
+		} finally {
+			Disconnect(null, prepStatement, connection);
+		}	
 	}
 	
 	

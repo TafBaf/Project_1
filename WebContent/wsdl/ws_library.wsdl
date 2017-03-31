@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="WS_LibraryService" targetNamespace="http://controller/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://controller/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+    <xs:schema elementFormDefault="unqualified" targetNamespace="http://controller/" version="1.0" xmlns:tns="http://controller/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="GetBooks" type="tns:GetBooks"/>
+
+  <xs:element name="GetBooksResponse" type="tns:GetBooksResponse"/>
+
+  <xs:complexType name="GetBooks">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="GetBooksResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:book"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="book">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="author" type="xs:string"/>
+      <xs:element name="id" type="xs:int"/>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="GetBooksResponse">
+    <wsdl:part name="parameters" element="tns:GetBooksResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetBooks">
+    <wsdl:part name="parameters" element="tns:GetBooks">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="WS_Library">
+    <wsdl:operation name="GetBooks">
+      <wsdl:input name="GetBooks" message="tns:GetBooks">
+    </wsdl:input>
+      <wsdl:output name="GetBooksResponse" message="tns:GetBooksResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WS_LibraryServiceSoapBinding" type="tns:WS_Library">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetBooks">
+      <soap:operation soapAction="urn:GetBooks" style="document"/>
+      <wsdl:input name="GetBooks">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetBooksResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WS_LibraryService">
+    <wsdl:port name="WS_LibraryPort" binding="tns:WS_LibraryServiceSoapBinding">
+      <soap:address location="http://localhost:8080/project_1/services/WS_LibraryPort"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
