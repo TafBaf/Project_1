@@ -9,6 +9,12 @@ import lib.LibPostgreSQL;
 import model.Book;
 
 
+/* 
+ * 
+ *  TODO : Use  Spring - JDBC Framework instead!!!!!!!!!
+ * 
+ */
+
 @WebService(targetNamespace = "http://controller/", portName = "WS_LibraryPort", serviceName = "WS_LibraryService")
 public class WS_Library {
 
@@ -32,5 +38,12 @@ public class WS_Library {
 
 		return bookList;
 	}	
+	
+	
+	public void AddBook(Book book) {
+		String query = "INSERT INTO book (name, author) VALUES (?, ?);";
+		String[] prepParams = {book.getName(), book.getAuthor()};
+		LibPostgreSQL.Execute(query, prepParams);		
+	}
 	
 }

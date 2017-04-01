@@ -73,7 +73,7 @@ public class LibPostgreSQL {
 	}
 
 	
-	public void Execute(String query, String[] prepParams) {
+	public static void Execute(String query, String[] prepParams) {
 		Connection connection = GetConnection();
 		PreparedStatement prepStatement = null;
 
