@@ -51,6 +51,9 @@ public class LibPostgreSQL {
 					prepStatement.setString(i + 1, prepParams[i]);
  				}
 			}
+			
+			System.out.println("LibPostgreSQL GetRows: " + prepStatement.toString());
+			
 			resultSet = prepStatement.executeQuery();
 
 			int colCount = resultSet.getMetaData().getColumnCount();
@@ -84,6 +87,9 @@ public class LibPostgreSQL {
 					prepStatement.setString(i + 1, prepParams[i]);
  				}
 			}
+			
+			System.out.println("LibPostgreSQL Exec: " + prepStatement.toString());
+			
 			prepStatement.executeUpdate(); 
 		} catch (SQLException e) {
 			e.printStackTrace();
