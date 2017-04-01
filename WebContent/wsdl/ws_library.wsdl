@@ -3,6 +3,10 @@
   <wsdl:types>
     <xs:schema elementFormDefault="unqualified" targetNamespace="http://controller/" version="1.0" xmlns:tns="http://controller/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
+  <xs:element name="AddBook" type="tns:AddBook"/>
+
+  <xs:element name="AddBookResponse" type="tns:AddBookResponse"/>
+
   <xs:element name="GetBooks" type="tns:GetBooks"/>
 
   <xs:element name="GetBooksResponse" type="tns:GetBooksResponse"/>
@@ -25,14 +29,32 @@
     </xs:sequence>
   </xs:complexType>
 
+  <xs:complexType name="AddBook">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:book"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="AddBookResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
 </xs:schema>
   </wsdl:types>
   <wsdl:message name="GetBooksResponse">
     <wsdl:part name="parameters" element="tns:GetBooksResponse">
     </wsdl:part>
   </wsdl:message>
+  <wsdl:message name="AddBookResponse">
+    <wsdl:part name="parameters" element="tns:AddBookResponse">
+    </wsdl:part>
+  </wsdl:message>
   <wsdl:message name="GetBooks">
     <wsdl:part name="parameters" element="tns:GetBooks">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AddBook">
+    <wsdl:part name="parameters" element="tns:AddBook">
     </wsdl:part>
   </wsdl:message>
   <wsdl:portType name="WS_Library">
@@ -40,6 +62,12 @@
       <wsdl:input name="GetBooks" message="tns:GetBooks">
     </wsdl:input>
       <wsdl:output name="GetBooksResponse" message="tns:GetBooksResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddBook">
+      <wsdl:input name="AddBook" message="tns:AddBook">
+    </wsdl:input>
+      <wsdl:output name="AddBookResponse" message="tns:AddBookResponse">
     </wsdl:output>
     </wsdl:operation>
   </wsdl:portType>
@@ -54,10 +82,19 @@
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="AddBook">
+      <soap:operation soapAction="urn:AddBook" style="document"/>
+      <wsdl:input name="AddBook">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="AddBookResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="WS_LibraryService">
     <wsdl:port name="WS_LibraryPort" binding="tns:WS_LibraryServiceSoapBinding">
-      <soap:address location="http://localhost:8080/project_1/services/WS_LibraryPort"/>
+      <soap:address location="http://localhost:8080/project_1/services"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

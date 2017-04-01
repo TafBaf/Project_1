@@ -3,6 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 import javax.jws.WebMethod;
+import javax.jws.WebParam;
 import javax.jws.WebService;
 
 import lib.LibPostgreSQL;
@@ -40,6 +41,7 @@ public class WS_Library {
 	}	
 	
 	
+	@WebMethod(operationName = "AddBook", action = "urn:AddBook")
 	public void AddBook(Book book) {
 		String query = "INSERT INTO book (name, author) VALUES (?, ?);";
 		String[] prepParams = {book.getName(), book.getAuthor()};
