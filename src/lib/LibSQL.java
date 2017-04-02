@@ -43,7 +43,7 @@ public class LibSQL {
 	}
 	
 	
-	public static List<String[]> GetQueryRows(String query, String[] prepParams) {
+	public static List<String[]> GetQueryRows(String query, Object[] prepParams) {
 		Connection connection = GetConnection();
 		PreparedStatement prepStatement = null;
 		ResultSet resultSet = null;
@@ -51,10 +51,17 @@ public class LibSQL {
 		
 		try {
 			prepStatement = connection.prepareStatement(query);
+			
 			if (prepParams != null) {
-				for (int i = 0; i < prepParams.length; i++) {
-					prepStatement.setString(i + 1, prepParams[i]);
- 				}
+				int i = 0;
+				for(Object param : prepParams) {
+				    if (param != null) {
+				    	prepStatement.setObject(++i, param);
+				    } else {
+				    	// set null parameter if value type is null and type is unknown
+				    	prepStatement.setNull(++i, Integer.MIN_VALUE);			    	
+				    }
+				}					
 			}
 			
 			System.out.println("LibSQL GetRows: " + prepStatement.toString());
@@ -81,17 +88,22 @@ public class LibSQL {
 	}
 
 	
-	public static void Execute(String query, String[] prepParams) {
+	public static void Execute(String query, Object[] prepParams) {
 		Connection connection = GetConnection();
 		PreparedStatement prepStatement = null;
 
 		try {
 			prepStatement = connection.prepareStatement(query);
-			if (prepParams != null) {
-				for (int i = 0; i < prepParams.length; i++) {
-					prepStatement.setString(i + 1, prepParams[i]);
- 				}
-			}
+			
+			int i = 0;
+			for(Object param : prepParams) {
+			    if (param != null) {
+			    	prepStatement.setObject(++i, param);
+			    } else {
+			    	// set null parameter if value type is null and type is unknown
+			    	prepStatement.setNull(++i, Integer.MIN_VALUE);			    	
+			    }
+			}			
 			
 			System.out.println("LibSQL Exec: " + prepStatement.toString());
 			

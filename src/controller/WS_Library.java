@@ -11,13 +11,14 @@ import model.Book;
 
 /* 
  * 
- *  TODO : Use  Spring - JDBC Framework instead!!!!!!!!!
+ *  TODO : Use  Spring - JDBC Framework instead??
  * 
  */
 
 @WebService(targetNamespace = "http://controller/", portName = "WS_LibraryPort", serviceName = "WS_LibraryService")
 public class WS_Library {
 
+ 
 	@WebMethod(operationName = "GetBooks", action = "urn:GetBooks")
 	public List<Book> GetBooks() {
 		List<Book> bookList = new ArrayList<Book>();
@@ -40,26 +41,29 @@ public class WS_Library {
 	}	
 	
 	
+ 
 	@WebMethod(operationName = "AddBook", action = "urn:AddBook")
 	public void AddBook(Book book) {
 		String query = "INSERT INTO book (name, author) VALUES (?, ?);";
-		String[] prepParams = {book.getName(), book.getAuthor()};
+		Object[] prepParams = {book.getName(), book.getAuthor()};
 		LibSQL.Execute(query, prepParams);		
 	}
 	
 
+ 
 	@WebMethod(operationName = "UpdateBook", action = "urn:UpdateBook")
 	public void UpdateBook(Book book) {
 		String query = "UPDATE book SET name = ?, author = ? WHERE _id = ?;";
-		String[] prepParams = {book.getName(), book.getAuthor(), String.valueOf(book.getId())};
+		Object[] prepParams = new Object[]{book.getName(), book.getAuthor(), book.getId()};
 		LibSQL.Execute(query, prepParams);			
 	}	
 	
 	
+ 
 	@WebMethod(operationName = "DeleteBook", action = "urn:DeleteBook")
 	public void DeleteBook(String id) {
 		String query = "DELETE FROM book WHERE _id = ?;";
-		String[] prepParams = {"id"};
+		Object[] prepParams = new Object[]{Integer.parseInt(id)};
 		LibSQL.Execute(query, prepParams);			
 	}
 	

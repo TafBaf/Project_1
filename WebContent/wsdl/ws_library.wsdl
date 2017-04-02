@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsdl:definitions name="WS_LibraryService" targetNamespace="http://controller/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://controller/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
   <wsdl:types>
-    <xs:schema elementFormDefault="unqualified" targetNamespace="http://controller/" version="1.0" xmlns:tns="http://controller/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:schema targetNamespace="http://controller/" version="1.0" xmlns:tns="http://controller/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
   <xs:element name="AddBook" type="tns:AddBook"/>
 
