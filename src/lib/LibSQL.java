@@ -10,13 +10,18 @@ import java.util.List;
 import java.util.Properties;
 
 
-public class LibPostgreSQL {
+public class LibSQL {
 
 	private static Properties GetProperties() {
 		Properties properties = new Properties();
 		
-		properties.setProperty("url", "jdbc:postgresql://localhost:5432/library");
-		properties.setProperty("user", "postgres");
+		/* MySQL */
+		// properties.setProperty("driver",   "com.mysql.jdbc.Driver");
+		
+		/* PostgreSQL */
+		properties.setProperty("driver",   "org.postgresql.Driver");
+		properties.setProperty("url",      "jdbc:postgresql://localhost:5432/library");
+		properties.setProperty("user",     "postgres");
 		properties.setProperty("password", "passw");
 		
 		return properties;
@@ -28,7 +33,7 @@ public class LibPostgreSQL {
 		Connection connection = null;
 
 		try {
-			Class.forName("org.postgresql.Driver");
+			Class.forName(properties.getProperty("driver"));
 			connection = DriverManager.getConnection(properties.getProperty("url"), properties);
 		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
@@ -52,7 +57,7 @@ public class LibPostgreSQL {
  				}
 			}
 			
-			System.out.println("LibPostgreSQL GetRows: " + prepStatement.toString());
+			System.out.println("LibSQL GetRows: " + prepStatement.toString());
 			
 			resultSet = prepStatement.executeQuery();
 
@@ -88,7 +93,7 @@ public class LibPostgreSQL {
  				}
 			}
 			
-			System.out.println("LibPostgreSQL Exec: " + prepStatement.toString());
+			System.out.println("LibSQL Exec: " + prepStatement.toString());
 			
 			prepStatement.executeUpdate(); 
 		} catch (SQLException e) {
