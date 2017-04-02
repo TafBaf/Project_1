@@ -7,9 +7,17 @@
 
   <xs:element name="AddBookResponse" type="tns:AddBookResponse"/>
 
+  <xs:element name="DeleteBook" type="tns:DeleteBook"/>
+
+  <xs:element name="DeleteBookResponse" type="tns:DeleteBookResponse"/>
+
   <xs:element name="GetBooks" type="tns:GetBooks"/>
 
   <xs:element name="GetBooksResponse" type="tns:GetBooksResponse"/>
+
+  <xs:element name="UpdateBook" type="tns:UpdateBook"/>
+
+  <xs:element name="UpdateBookResponse" type="tns:UpdateBookResponse"/>
 
   <xs:complexType name="GetBooks">
     <xs:sequence/>
@@ -29,6 +37,16 @@
     </xs:sequence>
   </xs:complexType>
 
+  <xs:complexType name="UpdateBook">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:book"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="UpdateBookResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
   <xs:complexType name="AddBook">
     <xs:sequence>
       <xs:element minOccurs="0" name="arg0" type="tns:book"/>
@@ -39,8 +57,26 @@
     <xs:sequence/>
   </xs:complexType>
 
+  <xs:complexType name="DeleteBook">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DeleteBookResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
 </xs:schema>
   </wsdl:types>
+  <wsdl:message name="DeleteBookResponse">
+    <wsdl:part name="parameters" element="tns:DeleteBookResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UpdateBookResponse">
+    <wsdl:part name="parameters" element="tns:UpdateBookResponse">
+    </wsdl:part>
+  </wsdl:message>
   <wsdl:message name="GetBooksResponse">
     <wsdl:part name="parameters" element="tns:GetBooksResponse">
     </wsdl:part>
@@ -53,8 +89,16 @@
     <wsdl:part name="parameters" element="tns:GetBooks">
     </wsdl:part>
   </wsdl:message>
+  <wsdl:message name="UpdateBook">
+    <wsdl:part name="parameters" element="tns:UpdateBook">
+    </wsdl:part>
+  </wsdl:message>
   <wsdl:message name="AddBook">
     <wsdl:part name="parameters" element="tns:AddBook">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DeleteBook">
+    <wsdl:part name="parameters" element="tns:DeleteBook">
     </wsdl:part>
   </wsdl:message>
   <wsdl:portType name="WS_Library">
@@ -64,10 +108,22 @@
       <wsdl:output name="GetBooksResponse" message="tns:GetBooksResponse">
     </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="UpdateBook">
+      <wsdl:input name="UpdateBook" message="tns:UpdateBook">
+    </wsdl:input>
+      <wsdl:output name="UpdateBookResponse" message="tns:UpdateBookResponse">
+    </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="AddBook">
       <wsdl:input name="AddBook" message="tns:AddBook">
     </wsdl:input>
       <wsdl:output name="AddBookResponse" message="tns:AddBookResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteBook">
+      <wsdl:input name="DeleteBook" message="tns:DeleteBook">
+    </wsdl:input>
+      <wsdl:output name="DeleteBookResponse" message="tns:DeleteBookResponse">
     </wsdl:output>
     </wsdl:operation>
   </wsdl:portType>
@@ -82,12 +138,30 @@
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="UpdateBook">
+      <soap:operation soapAction="urn:UpdateBook" style="document"/>
+      <wsdl:input name="UpdateBook">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="UpdateBookResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="AddBook">
       <soap:operation soapAction="urn:AddBook" style="document"/>
       <wsdl:input name="AddBook">
         <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="AddBookResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteBook">
+      <soap:operation soapAction="urn:DeleteBook" style="document"/>
+      <wsdl:input name="DeleteBook">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="DeleteBookResponse">
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>

@@ -48,6 +48,7 @@ public class WS_Library {
 	}
 	
 
+	@WebMethod(operationName = "UpdateBook", action = "urn:UpdateBook")
 	public void UpdateBook(Book book) {
 		String query = "UPDATE book SET name = ?, author = ? WHERE _id = ?;";
 		String[] prepParams = {book.getName(), book.getAuthor(), String.valueOf(book.getId())};
@@ -55,6 +56,7 @@ public class WS_Library {
 	}	
 	
 	
+	@WebMethod(operationName = "DeleteBook", action = "urn:DeleteBook")
 	public void DeleteBook(String id) {
 		String query = "DELETE FROM book WHERE _id = ?;";
 		String[] prepParams = {"id"};
